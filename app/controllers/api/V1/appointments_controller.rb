@@ -9,6 +9,19 @@ class Api::V1::AppointmentsController < ApplicationController
     render json: { error: 'No reserves yet' }, status: :not_found
   end
 
+  def create
+    item = Item.find(params[:item_id])
+    json_request = JSON.parse(request.body.read)
+    city = json_request['city']
+    date = json_request['date']
+
+    @appointments = Appointment.create(user_id: params[:user_id], item_id: params[:item_id], date: date, city: city)
+
+    render json: @appointments, status: 200
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: 'No reserves yet' }, status: :not_found
+  end
+
   private
 
   def reserve_params
