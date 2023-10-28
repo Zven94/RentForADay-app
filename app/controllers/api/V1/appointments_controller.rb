@@ -1,5 +1,5 @@
 class Api::V1::AppointmentsController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: [:create, :destroy]
+  skip_before_action :verify_authenticity_token, only: %i[create destroy]
 
   def index
     @appointments = Appointment.where(user_id: params[:user_id])
@@ -10,16 +10,25 @@ class Api::V1::AppointmentsController < ApplicationController
   end
 
   def create
-    item = Item.find(params[:item_id])
+    Item.find(params[:item_id])
     json_request = JSON.parse(request.body.read)
     city = json_request['city']
     date = json_request['date']
 
-    @appointments = Appointment.create(user_id: params[:user_id], item_id: params[:item_id], date: date, city: city)
+    @appointments = Appointment.create(user_id: params[:user_id], item_id: params[:item_id], date:, city:)
 
     render json: @appointments, status: 200
   rescue ActiveRecord::RecordNotFound
     render json: { error: 'No reserves yet' }, status: :not_found
+  end
+
+  def destroy
+    @appointments = Appointment.find(params[:id])
+    @appointments.destroy
+
+    render json: { message: 'Appointment deleted' }, status: 200
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: 'Appointment not found' }, status: :not_found
   end
 
   private
