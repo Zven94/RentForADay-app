@@ -64,4 +64,21 @@ RSpec.describe 'Appointment API', type: :request do
     end
   end
 
+  path '/api/v1/users/{user_id}/appointments/{id}' do
+    parameter name: :user_id, in: :path, type: :string, description: 'User id'
+    parameter name: :id, in: :path, type: :string, description: 'Appointment id'
+
+    delete('Delete appointment') do
+      tags 'Delete appointment'
+      consumes 'application/json', 'application/xml'
+
+      response '201', 'Appointment delete' do
+        let(:user_id) { User.create(name: 'Test name', email: 'test4@example.com', password: '123456').id }
+        let(:item_id) { Item.create(name: 'Item', city: 'Test city', price: '100', description: 'Test description').id }
+        let(:id) { Appointment.create(item_id:, city: 'Test city', date: '02/10/2023', user_id:).id }
+
+        run_test!
+      end
+    end
+  end
 end
