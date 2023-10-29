@@ -110,6 +110,8 @@ GEM
     drb (2.1.1)
       ruby2_keywords
     erubi (1.12.0)
+    faker (3.2.1)
+      i18n (>= 1.8.11, < 2)
     globalid (1.2.1)
       activesupport (>= 6.1)
     i18n (1.14.1)
@@ -312,6 +314,7 @@ DEPENDENCIES
   capybara
   debug
   devise
+  faker
   importmap-rails
   jbuilder
   pg (~> 1.1)
