@@ -1,2 +1,2 @@
-module Api::AppoinmentsHelper
+module Api::AppointmentsHelper
 end
