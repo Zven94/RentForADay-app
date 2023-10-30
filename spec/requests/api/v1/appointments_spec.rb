@@ -5,10 +5,10 @@ RSpec.describe 'Appointment API', type: :request do
     parameter name: 'user_id', in: :path, type: :integer, description: 'user_id', required: true
 
     get('list appointments by user') do
-      tags 'Comments by posts'
+      tags 'Reserves by user'
       produces 'application/json', 'application/xml'
 
-      response '200', 'Comments found' do
+      response '200', 'Reserve found' do
         schema type: :array,
                items: {
                  type: :object,
