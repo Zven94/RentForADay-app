@@ -2,9 +2,10 @@ class Api::V1::AppointmentsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: %i[create destroy]
 
   def index
-    @appointments = Appointment.where(user_id: params[:user_id])
+    # @appointments = Appointment.where(user_id: params[:user_id])
+    @appointments = Appointment.includes(:item).where(user_id: params[:user_id])
 
-    render json: @appointments, status: 200
+    render json: @appointments.to_json(include: :item), status: :ok
   rescue ActiveRecord::RecordNotFound
     render json: { error: 'No reserves yet' }, status: 404
   end
