@@ -1,4 +1,6 @@
 class Api::V1::UsersController < ApplicationController
+  before_action :set_api_user, only: %i[show destroy]
+
   # GET /api/v1/users
   def index
     @api_users = User.all
@@ -43,6 +45,11 @@ class Api::V1::UsersController < ApplicationController
   end
 
   private
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_api_user
+    @api_user = User.find(params[:id])
+  end
 
   def api_user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
