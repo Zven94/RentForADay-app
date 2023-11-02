@@ -16,7 +16,6 @@ class Api::V1::UsersController < ApplicationController
 
   # GET /api/v1/users/1
   def show
-    @api_user = User.find(params[:id])
     if @api_user.present?
       render json: { success: true, user: @api_user }
     else
@@ -36,7 +35,6 @@ class Api::V1::UsersController < ApplicationController
 
   # DELETE /api/v1/users/:id
   def destroy
-    @api_user = User.find(params[:id])
     if @api_user.destroy
       render json: { success: true, message: 'User deleted' }
     else
