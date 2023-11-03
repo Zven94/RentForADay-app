@@ -4,9 +4,10 @@ class Api::V1::ItemsController < ApplicationController
       {
         id: item.id,
         name: item.name,
+        city: item.city,
         description: item.description,
         price: item.price,
-        image: request.base_url + '/assets/' + item.image
+        image: "#{request.base_url}/assets/#{item.image}"
       }
     end
     render json: items
