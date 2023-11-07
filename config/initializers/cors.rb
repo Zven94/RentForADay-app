@@ -1,6 +1,13 @@
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins 'http://localhost:3001'
-    resource '*', headers: :any, methods: [:get, :post, :put, :patch, :delete, :options, :head], credentials: true
+    origins '*' # later change to the domain of the frontend app
+    # resource '*', headers: :any, methods: [:get, :post, :patch, :put],
+    # expose: [:Authorization]
+    resource(
+     '*',
+     headers: :any,
+     expose: ["Authorization"],
+     methods: [:get, :patch, :put, :delete, :post, :options, :show]
+    )
   end
 end

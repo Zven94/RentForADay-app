@@ -1,0 +1,125 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/v1/users/{user_id}/appointments":
+    parameters:
+    - name: user_id
+      in: path
+      description: user_id
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: list appointments by user
+      tags:
+      - Reserves by user
+      responses:
+        '200':
+          description: Reserve found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    user_id:
+                      type: integer
+                    item_id:
+                      type: integer
+                    city:
+                      type: string
+                    date:
+                      type: string
+                  required:
+                  - id
+                  - user_id
+                  - item_id
+                  - city
+                  - date
+            application/xml:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    user_id:
+                      type: integer
+                    item_id:
+                      type: integer
+                    city:
+                      type: string
+                    date:
+                      type: string
+                  required:
+                  - id
+                  - user_id
+                  - item_id
+                  - city
+                  - date
+    post:
+      summary: Add an appointment
+      tags:
+      - Appointment
+      parameters: []
+      responses:
+        '201':
+          description: blog created
+        '422':
+          description: unprocessable_entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                item_id:
+                  type: integer
+                city:
+                  type: string
+                date:
+                  type: date
+          application/xml:
+            schema:
+              type: object
+              properties:
+                item_id:
+                  type: integer
+                city:
+                  type: string
+                date:
+                  type: date
+        description: New Apponitment
+  "/api/v1/users/{user_id}/appointments/{id}":
+    parameters:
+    - name: user_id
+      in: path
+      description: User id
+      required: true
+      schema:
+        type: string
+    - name: id
+      in: path
+      description: Appointment id
+      required: true
+      schema:
+        type: string
+    delete:
+      summary: Delete appointment
+      tags:
+      - Delete appointment
+      responses:
+        '201':
+          description: Appointment delete
+servers:
+- url: http://localhost:3000/
+  variables:
+    defaultHost:
+      default: http://localhost:3000/
