@@ -7,7 +7,7 @@ class Api::V1::ItemsController < ApplicationController
         city: item.city,
         description: item.description,
         price: item.price,
-        image: "#{request.base_url}/assets/#{item.image}"
+        image: item.image
       }
     end
     render json: items
