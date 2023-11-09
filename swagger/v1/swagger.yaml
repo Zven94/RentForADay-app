@@ -285,7 +285,7 @@ paths:
               - email
               - password
 servers:
-- url: http://127.0.0.1:4000/
+- url: https://rent-for-a-day.onrender.com/
   variables:
     defaultHost:
-      default: https://localhost:4000/
+      default: https://rent-for-a-day.onrender.com/

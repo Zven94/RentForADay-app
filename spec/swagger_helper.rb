@@ -25,7 +25,7 @@ RSpec.configure do |config|
           url: 'https://rent-for-a-day.onrender.com/',
           variables: {
             defaultHost: {
-              default: 'https://localhost:4000/'
+              default: 'https://rent-for-a-day.onrender.com/'
             }
           }
         }
