@@ -56,35 +56,29 @@ RSpec.describe 'Items API', type: :request do
 
       response '422', 'Invalid Request' do
         let(:item) do
-          {
-            name: '',
-            description: 'item Description',
-            price: 'Invalid',
-            city: ''
-          }
+          Item.create(name: '', description: 'item Description', price: 'Invalid', city: '')
+          run_test!
         end
-        run_test!
       end
     end
-  end
 
-  path '/api/v1/items/{id}' do
-    delete 'Delete an item' do
-      tags 'items'
-      produces 'application/json'
-      parameter name: :id, in: :path, type: :integer
+    path '/api/v1/items/{id}' do
+      delete 'Delete an item' do
+        tags 'items'
+        produces 'application/json'
+        parameter name: :id, in: :path, type: :integer
 
-      response '200', 'Item deleted successfully' do
-        let!(:item) do
-          Item.create(name: 'item name', description: 'item Description', price: '2500.78', city: 'Pucon',
-                      image: 'photo.png')
-        end
-        let(:id) { item.id }
+        response '200', 'Item deleted successfully' do
+          let!(:item) do
+            Item.create(name: 'name', description: 'Description', price: '2500.78', city: 'Pucon', image: 'photo.png')
+          end
+          let(:id) { item.id }
 
-        run_test!
+          run_test!
 
-        it 'deletes the item from the database' do
-          expect { item.reload }.to raise_error ActiveRecord::RecordNotFound
+          it 'deletes the item from the database' do
+            expect { item.reload }.to raise_error ActiveRecord::RecordNotFound
+          end
         end
       end
     end
