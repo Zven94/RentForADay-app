@@ -75,7 +75,7 @@ RSpec.describe 'Appointment API', type: :request do
       response '201', 'Appointment delete' do
         let(:user_id) { User.create(name: 'Test name', email: 'test4@example.com', password: '123456').id }
         let(:item_id) { Item.create(name: 'Item', city: 'Test city', price: '100', description: 'Test description').id }
-        let(:id) { Appointment.create(item_id: item_id, city: 'Test city', date: '02/10/2023', user_id:).id }
+        let(:id) { Appointment.create(item_id: item_id, city: 'Test city', date: '02/10/2023', user_id: user_id).id }
 
         run_test!
       end
