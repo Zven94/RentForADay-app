@@ -8,7 +8,7 @@ class Api::V1::ItemsController < ApplicationController
         description: item.description,
         price: item.price,
         # image: "#{request.base_url}/assets/#{item.image}"
-        image: item.image.attached? ? rails_blob_path(item.image, only_path: true) : nil
+        image: item.image.attached? ? url_for(item.image) : nil
       }
     end
     render json: items
