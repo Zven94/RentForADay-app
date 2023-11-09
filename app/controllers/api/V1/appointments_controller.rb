@@ -1,5 +1,4 @@
 class Api::V1::AppointmentsController < ApplicationController
-
   def index
     @appointments = Appointment.includes(:item).where(user_id: params[:user_id])
 
@@ -11,8 +10,8 @@ class Api::V1::AppointmentsController < ApplicationController
   def create
     Item.find(params[:item_id])
     json_request = JSON.parse(request.body.read)
-    city = json_request['city']
-    date = json_request['date']
+    json_request['city']
+    json_request['date']
 
     @appointment = Appointment.new(user_id: params[:user_id], item_id: params[:item_id],
                                    date: params[:date], city: params[:city])

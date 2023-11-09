@@ -75,7 +75,10 @@ RSpec.describe 'Items API', type: :request do
       parameter name: :id, in: :path, type: :integer
 
       response '200', 'Item deleted successfully' do
-        let!(:item) { Item.create(name: 'item name', description: 'item Description', price: '2500.78', city: 'Pucon', image: 'photo.png') }
+        let!(:item) do
+          Item.create(name: 'item name', description: 'item Description', price: '2500.78', city: 'Pucon',
+                      image: 'photo.png')
+        end
         let(:id) { item.id }
 
         run_test!
