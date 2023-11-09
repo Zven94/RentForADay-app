@@ -1,8 +1,5 @@
 class Api::V1::AppointmentsController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: %i[create destroy]
-
   def index
-    # @appointments = Appointment.where(user_id: params[:user_id])
     @appointments = Appointment.includes(:item).where(user_id: params[:user_id])
 
     render json: @appointments.to_json(include: :item), status: :ok
@@ -13,10 +10,11 @@ class Api::V1::AppointmentsController < ApplicationController
   def create
     Item.find(params[:item_id])
     json_request = JSON.parse(request.body.read)
-    city = json_request['city']
-    date = json_request['date']
+    json_request['city']
+    json_request['date']
 
-    @appointment = Appointment.new(user_id: params[:user_id], item_id: params[:item_id], date:, city:)
+    @appointment = Appointment.new(user_id: params[:user_id], item_id: params[:item_id],
+                                   date: params[:date], city: params[:city])
 
     if @appointment.save
       render json: @appointment, status: :created

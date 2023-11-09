@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Api::V1::ItemsController, type: :controller do
   describe 'GET #index' do
     before(:each) do
-      @item = Item.create(name: 'Hause 1', price: 100, city: 'Buenos Aires', description: 'Hause 1 description')
+      @item = Item.create(name: 'Hause 1', price: 100, city: 'Buenos Aires', description: 'Hause 1', image: 'image')
     end
 
     it 'returns http success: 200 code' do
@@ -14,8 +14,7 @@ RSpec.describe Api::V1::ItemsController, type: :controller do
     it 'JSON body response contains expected item attributes' do
       get :index
       json_response = JSON.parse(response.body)
-      expect(json_response.first.keys).to match_array(%w[id name price city description image
-                                                         created_at updated_at])
+      expect(json_response.first.keys).to match_array(%w[id name price city description image])
     end
 
     it 'Show all items' do

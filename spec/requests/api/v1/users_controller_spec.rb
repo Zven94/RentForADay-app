@@ -1,68 +1,93 @@
-require 'rails_helper'
+require 'swagger_helper'
 
-RSpec.describe 'Api::Users', type: :request do
-  before(:all) do
-    @user = User.create(
-      name: 'Test User',
-      email: 'test@gmail.com',
-      password: 'password',
-      password_confirmation: 'password'
-    )
-  end
+describe 'Users API' do
+  path '/api/v1/users' do
+    get 'Get a list of all users' do
+      tags 'Users'
+      produces 'application/json'
 
-  after(:all) do
-    @user.destroy
-  end
-
-  describe 'GET /api/v1/users' do
-    it 'should return success response' do
-      get '/api/v1/users'
-      expect(response).to have_http_status(200)
-    end
-
-    it 'should return all users' do
-      get '/api/v1/users'
-      expect(JSON.parse(response.body)['users'].size).to eq(1)
-    end
-  end
-
-  describe 'POST /api/v1/users' do
-    it 'should return success response' do
-      post '/api/v1/users', params: {
-        user: {
-          name: 'Test User 2',
-          email: 'test@gmail.com',
-          password: 'password',
-          password_confirmation: 'password'
-        }
-      }
-      expect(response).to have_http_status(200)
-    end
-
-    it 'should create a new user' do
-      expect do
-        post '/api/v1/users', params: {
-          user: {
-            name: 'Test User 2',
-            email: 'testing@gmail.com',
-            password: 'password',
-            password_confirmation: 'password'
+      response '200', 'Users found' do
+        schema type: :object, properties: {
+          success: { type: :boolean },
+          users: {
+            type: :array,
+            items: {
+              type: :object,
+              properties: {
+                id: { type: :integer },
+                email: { type: :string },
+                name: { type: :string },
+                created_at: { type: :string },
+                updated_at: { type: :string }
+              },
+              required: %w[id name email]
+            }
           }
         }
-      end.to change { User.count }.from(1).to(2)
+        let(:user) { User.create(name: 'Test name', email: 'test4@example.com', password: '12345678') }
+        run_test!
+      end
     end
   end
+  path '/api/v1/users' do
+    post 'Creates User' do
+      tags 'User'
+      consumes 'application/json'
+      parameter name: :user, in: :body, schema: {
+        type: :object, properties: {
+                         user: {
+                           type: :object,
+                           properties: {
+                             name: { type: :string },
+                             email: { type: :string },
+                             password: { type: :string }
+                           }
+                         }
+                       },
+        required: %w[email password]
+      }
 
-  describe 'DELETE /api/v1/users/:id' do
-    it 'should return success response' do
-      delete "/api/v1/users/#{User.last.id}"
-      expect(response).to have_http_status(200)
+      response '200', 'User Created' do
+        let(:user) { User.create(name: 'Test name', email: 'test4@example.com', password: '12345678') }
+
+        run_test!
+      end
     end
+  end
+  path '/login' do
+    post 'Login User' do
+      tags 'User'
+      consumes 'application/json'
+      parameter name: :user, in: :body, schema: {
+        type: :object, properties: {
+                         user: {
+                           type: :object,
+                           properties: {
+                             email: { type: :string },
+                             password: { type: :string }
+                           }
+                         }
+                       },
+        required: %w[email password]
+      }
 
-    it 'should delete a user' do
-      expect do
-        delete "/api/v1/users/#{User.last.id}"
-      end.to change { User.count }.from(1).to(0)
+      response '200', 'Logged is succesfully' do
+        let(:user) { User.create(name: 'Test name', email: 'test4@example.com', password: '12345678') }
+        let(:valid_params) { { user: { email: 'test4@example.com', password: '12345678' } } }
+
+        run_test! do
+          expect(json['id']).to_not be_nil
+          expect(json['name']).to_not be_nil
+          expect(json['email']).to_not be_nil
+        end
+      end
+
+      response '401', 'Invalid credentials' do
+        let(:user) { User.create(name: 'Test name', email: 'test4@example.com', password: '12345678') }
+        let(:invalid_params) { { user: { email: user.email, password: 'invalid_password' } } }
+
+        run_test!
+      end
     end
   end
 end

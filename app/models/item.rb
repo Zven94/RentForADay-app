@@ -1,5 +1,5 @@
 class Item < ApplicationRecord
-  has_many :appointments
+  has_many :appointments, dependent: :destroy
 
   validates :name, :city, :description, presence: true
   validates :name, length: { maximum: 50 }
