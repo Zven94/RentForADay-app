@@ -5,8 +5,8 @@ RSpec.describe 'Api::V1::Sessions', type: :request do
     user = User.create(
       name: 'Test User',
       email: 'test@gmail.com',
-      password: 'password',
-      password_confirmation: 'password'
+      password: 'password123',
+      password_confirmation: 'password123'
     )
 
     let(:valid_attributes) do
