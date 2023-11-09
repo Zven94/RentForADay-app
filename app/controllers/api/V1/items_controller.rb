@@ -7,7 +7,8 @@ class Api::V1::ItemsController < ApplicationController
         city: item.city,
         description: item.description,
         price: item.price,
-        image: "#{request.base_url}/assets/#{item.image}"
+        # image: "#{request.base_url}/assets/#{item.image}"
+        image: item.image.attached? ? rails_blob_path(item.image, only_path: true) : nil
       }
     end
     render json: items
