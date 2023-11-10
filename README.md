@@ -11,6 +11,7 @@
 # 📗 Table of Contents
 
 - [📖 About the Project](#about-project)
+  - [ ♦ Kanban Board](#kanban-board)
   - [🛠 Built With](#built-with)
     - [Tech Stack](#tech-stack)
     - [Key Features](#key-features)
@@ -43,7 +44,29 @@ Two repositories were created for its construction:
 
 Additionally, the API documentation is available [here](https://rent-for-a-day.onrender.com/api-docs/index.html).
 
+
 ---
+## ♦ Kanban Board <a name="kanban-board"></a>
+
+[Project's Kanban board](https://github.com/users/Zven94/projects/10)
+
+
+<br>
+<br>
+
+![photo_2023-11-09_16-45-50](https://github.com/Zven94/rentforaday-front-end/assets/15095218/b3df83c1-8877-469a-9ebd-6512f84730de)
+
+<br>
+<br>
+
+![FireShot Capture 407 - View 1 · Rent For A Day - github com](https://github.com/Zven94/rentforaday-front-end/assets/15095218/caa8c9ff-8c8e-406c-ba5f-e596fe1fa952)
+
+<br>
+<br>
+
+
+---
+
 
 ## 🛠 Built With <a name="built-with"></a>
 
@@ -113,21 +136,41 @@ In order to run this project you need to have:
 To clone this repository to your desired folder, run the following command: <br>
 
 ```
-git clone https://github.com/Ruthmy/budget-app
+git clone https://github.com/Zven94/RentForADay-app
 ```
 
 Navigate to the cloned repository and run the following command to install the necessary gems:
 ```
-cd blog-app
+cd RentForADay-app
 bundle install
 ```
+Before continue you will need to create your own credentials file. To do so, first remove config/master.key and config/credentials.yml.enc if they exist.
+
+run the following command:
+```
+EDITOR=code rails credentials:edit 
+```
+You can close the editor that opens. This command will create a new master.key and credentials.yml.enc if they do not exist. Now you can continue.
 
 ## Usage
 Initialize it with
 ```
 rails server
 ```
-Then open `http://localhost:3000` in your browser.
+Then open `http://localhost:4000` in your browser.
+
+Now you need to create the database, run the following command:
+```
+rails db:create
+```
+Then migrate the database:
+```
+rails db:migrate
+```
+And finally, seed the database:
+```
+rails db:seed
+```
 
 ### Test
 To run the tests try the following command:
