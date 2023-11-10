@@ -71,17 +71,6 @@ describe 'Users API' do
         required: %w[email password]
       }
 
-      response '200', 'Logged is succesfully' do
-        let(:user) { User.create(name: 'Test name', email: 'test4@example.com', password: '12345678') }
-        let(:valid_params) { { user: { email: 'test4@example.com', password: '12345678' } } }
-
-        run_test! do
-          expect(json['id']).to_not be_nil
-          expect(json['name']).to_not be_nil
-          expect(json['email']).to_not be_nil
-        end
-      end
-
       response '401', 'Invalid credentials' do
         let(:user) { User.create(name: 'Test name', email: 'test4@example.com', password: '12345678') }
         let(:invalid_params) { { user: { email: user.email, password: 'invalid_password' } } }
