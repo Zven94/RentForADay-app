@@ -1,0 +1,291 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/v1/users/{user_id}/appointments":
+    parameters:
+    - name: user_id
+      in: path
+      description: user_id
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: list appointments by user
+      tags:
+      - Reserves by user
+      responses:
+        '200':
+          description: Reserve found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    user_id:
+                      type: integer
+                    item_id:
+                      type: integer
+                    city:
+                      type: string
+                    date:
+                      type: string
+                  required:
+                  - id
+                  - user_id
+                  - item_id
+                  - city
+                  - date
+            application/xml:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    user_id:
+                      type: integer
+                    item_id:
+                      type: integer
+                    city:
+                      type: string
+                    date:
+                      type: string
+                  required:
+                  - id
+                  - user_id
+                  - item_id
+                  - city
+                  - date
+    post:
+      summary: Add an appointment
+      tags:
+      - Appointment
+      parameters: []
+      responses:
+        '201':
+          description: Appointment created
+        '422':
+          description: unprocessable_entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                item_id:
+                  type: integer
+                city:
+                  type: string
+                date:
+                  type: date
+          application/xml:
+            schema:
+              type: object
+              properties:
+                item_id:
+                  type: integer
+                city:
+                  type: string
+                date:
+                  type: date
+        description: New Apponitment
+  "/api/v1/users/{user_id}/appointments/{id}":
+    parameters:
+    - name: user_id
+      in: path
+      description: User id
+      required: true
+      schema:
+        type: string
+    - name: id
+      in: path
+      description: Appointment id
+      required: true
+      schema:
+        type: string
+    delete:
+      summary: Delete appointment
+      tags:
+      - Delete appointment
+      responses:
+        '201':
+          description: Appointment delete
+  "/api/v1/items":
+    get:
+      summary: Get a list of all items
+      tags:
+      - Items
+      responses:
+        '200':
+          description: No items Found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    city:
+                      type: string
+                    description:
+                      type: string
+                    image:
+                      type: string
+                  required:
+                  - id
+                  - name
+                  - city
+                  - description
+                  - image
+                  message:
+                    type: string
+    post:
+      summary: Creates an Item
+      tags:
+      - items
+      parameters: []
+      responses:
+        '200':
+          description: item Created
+        '422':
+          description: Invalid Request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                price:
+                  type: string
+                image:
+                  type: string
+                city:
+                  type: string
+              required:
+              - name
+              - description
+              - price
+              - city
+              - image
+  "/api/v1/items/{id}":
+    delete:
+      summary: Delete an item
+      tags:
+      - items
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Item deleted successfully
+  "/api/v1/users":
+    get:
+      summary: Get a list of all users
+      tags:
+      - Users
+      responses:
+        '200':
+          description: Users found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  users:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        email:
+                          type: string
+                        name:
+                          type: string
+                        created_at:
+                          type: string
+                        updated_at:
+                          type: string
+                      required:
+                      - id
+                      - name
+                      - email
+    post:
+      summary: Creates User
+      tags:
+      - User
+      parameters: []
+      responses:
+        '200':
+          description: User Created
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    email:
+                      type: string
+                    password:
+                      type: string
+              required:
+              - email
+              - password
+  "/login":
+    post:
+      summary: Login User
+      tags:
+      - User
+      parameters: []
+      responses:
+        '200':
+          description: Logged is succesfully
+        '401':
+          description: Invalid credentials
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                    password:
+                      type: string
+              required:
+              - email
+              - password
+servers:
+- url: https://rent-for-a-day.onrender.com/
+  variables:
+    defaultHost:
+      default: https://rent-for-a-day.onrender.com/
