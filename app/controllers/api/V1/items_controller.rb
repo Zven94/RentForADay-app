@@ -33,8 +33,12 @@ class Api::V1::ItemsController < ApplicationController
 
   def destroy
     item = Item.find(params[:id])
-    item.destroy
-    render json: item
+
+    if item.destroy
+      render json: item
+    else
+      render json: { errors: item.errors }, status: :unprocessable_entity
+    end
   end
 
   private
